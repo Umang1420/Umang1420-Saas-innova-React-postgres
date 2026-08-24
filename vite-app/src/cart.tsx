@@ -27,6 +27,12 @@ const Cart = () => {
       return
     }
 
+
+
+
+
+    
+
     setLoading(true)
 
     const getData = setTimeout(() => {
