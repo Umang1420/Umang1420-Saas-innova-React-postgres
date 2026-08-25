@@ -9,8 +9,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "pg": "^8.23.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^1.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^2.1.13",
