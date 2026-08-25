@@ -2,6 +2,7 @@ import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
+    CreateDateColumn,
 } from "typeorm"
 
 @Entity()
@@ -22,4 +23,31 @@ export class User {
     // @ts-ignore
     @Column({ type: "boolean" })
     isActive!: boolean
+}
+
+@Entity()
+export class Product{
+    // @ts-ignore
+    @PrimaryGeneratedColumn()
+    id!: number
+
+    // @ts-ignore
+    @Column({type  : "varchar"})
+    title!: string
+
+    // @ts-ignore
+    @Column({type  : "int"})
+    price!: number
+
+    // @ts-ignore
+    @Column({type  : "varchar"})
+    description!: string
+
+    // @ts-ignore
+    @Column({ type: "boolean" })
+    isActive!: boolean
+
+    // @ts-ignore
+    @CreateDateColumn()
+    CreatedAt!: Date
 }
