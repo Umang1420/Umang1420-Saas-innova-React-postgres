@@ -7,6 +7,9 @@
     "skipLibCheck": true,
     "types": ["@rsbuild/core/types", "node"],
     "useDefineForClassFields": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "strictPropertyInitialization": false,
 
     /* modules */
     "moduleDetection": "force",

@@ -6,9 +6,11 @@
   "scripts": {
     "build": "rsbuild build",
     "dev": "rsbuild",
+    "server": "tsx --tsconfig tsconfig.server.json server/server.js",
     "preview": "rsbuild preview"
   },
   "dependencies": {
+    "mysql2": "^3.24.2",
     "pg": "^8.23.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
@@ -21,6 +23,7 @@
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "tsx": "^4.20.3",
     "typescript": "^6.0.3"
   }
 }
