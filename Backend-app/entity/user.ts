@@ -35,7 +35,7 @@ export class Product{
     @Column({type  : "varchar"})
     description!: string
 
-    @Column({ type: "boolean" })
+    @Column({type : "boolean"})
     isActive!: boolean
 
 
