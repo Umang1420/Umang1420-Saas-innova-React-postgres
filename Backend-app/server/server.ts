@@ -60,9 +60,24 @@ app.post("/users", async (req: Request, res: Response) => {
     const result = await userRepository.save(user)
     res.json(result)
 })
+
 app.post("/product", async (req: Request, res: Response) => {
-     console.log("Request body:", req.body)
-    const product = productRepository.create(req.body)
+    const { title, price, description, isActive, userId } = req.body
+
+    const user = await userRepository.findOneBy({ id: userId })
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" })
+    }
+
+    const product = productRepository.create({
+        title,
+        price,
+        description,
+        isActive,
+        User: user,  
+    })
+
     const result = await productRepository.save(product)
     res.json(result)
 })
