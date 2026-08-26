@@ -3,7 +3,6 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeor
 @Entity()
 export class User {
     
-
     @PrimaryGeneratedColumn()
     id!: number
 
@@ -24,10 +23,8 @@ export class Product{
     @PrimaryGeneratedColumn()
     id!: number
 
-    
     @Column({type  : "varchar"})
     title!: string
-
 
     @Column({type  : "int"})
     price!: number
@@ -37,7 +34,6 @@ export class Product{
 
     @Column({type : "boolean"})
     isActive!: boolean
-
 
     @CreateDateColumn()
     CreatedAt!: Date
