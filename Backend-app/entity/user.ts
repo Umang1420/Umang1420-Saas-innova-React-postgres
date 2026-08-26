@@ -1,19 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn } from "typeorm"
 
 @Entity()
-export class User {
+export class Usere {
     
     @PrimaryGeneratedColumn()
     id!: number
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar" , name : "first_name" })
     firstName!: string
 
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", name: "last_name" })
     lastName!: string
 
-    @Column({ type: "boolean" })
+    @Column({ type: "boolean", name: "is_active"  })
     isActive!: boolean
 }
 
@@ -37,4 +37,8 @@ export class Product{
 
     @CreateDateColumn()
     CreatedAt!: Date
+
+    @OneToOne(()=>Usere)
+    @JoinColumn()
+    User!: Usere
 }
