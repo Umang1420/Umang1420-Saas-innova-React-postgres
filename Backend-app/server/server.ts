@@ -75,7 +75,7 @@ app.post("/product", async (req: Request, res: Response) => {
         price,
         description,
         isActive,
-        User: user,  
+        User: [user],
     })
 
     const result = await productRepository.save(product)

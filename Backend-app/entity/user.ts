@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToOne, JoinColumn, ManyToMany, JoinTable } from "typeorm"
 
 @Entity()
 export class Usere {
@@ -38,7 +38,7 @@ export class Product{
     @CreateDateColumn()
     CreatedAt!: Date
 
-    @OneToOne(()=>Usere)
-    @JoinColumn()
-    User!: Usere
+    @ManyToMany(()=>Usere)
+    @JoinTable()
+    User!: Usere[]
 }
