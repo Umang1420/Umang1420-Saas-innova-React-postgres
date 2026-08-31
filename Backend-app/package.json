@@ -7,7 +7,8 @@
     "build": "rsbuild build",
     "dev": "rsbuild",
     "server": "tsx --tsconfig tsconfig.server.json server/server.js",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "start": "npx tsx src/server.ts"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",

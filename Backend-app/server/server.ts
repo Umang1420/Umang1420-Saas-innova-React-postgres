@@ -85,18 +85,53 @@ app.post("/product", async (req: Request, res: Response) => {
 })
 
 app.put("/users/:id", async (req: Request, res: Response) => {
-    await userRepository.update(Number(req.params.id), req.body)
-    const updatedUser = await userRepository.findOneBy({ id: Number(req.params.id) })
-    res.json(updatedUser)
+    //First way
+
+    // await userRepository.update(Number(req.params.id), req.body)
+    // const updatedUser = await userRepository.findOneBy({ id: Number(req.params.id) })       // in this method the issue was after updating data it changes the order of data
+                                                                                               // last updated data will be the first one after update. Second and thired method resolves this issue
+    // res.json(updatedUser)
+
+    //Secound way
+
+    // const userId = Number(req.params.id)
+
+    // if (!Number.isInteger(userId)) {
+    //     return res.status(400).json({ message: "Invalid user id" })
+    // }
+
+    // const existingUser = await userRepository.findOneBy({ id: userId })
+
+    // if (!existingUser) {
+    //     return res.status(404).json({ message: "User not found" })
+    // }
+
+    // const updatedUser = await userRepository.save({
+    //     ...existingUser,
+    //     ...req.body,
+    //     id: userId,
+    // })
+
+    // res.json(updatedUser)
+
+    // 3rd Way
+
+    const userId = Number(req.params.id)
+    const user = await userRepository.findOneBy({id: userId})
+    if(!user) return res.status(404).json({message:"User not found"});
+    userRepository.merge(user, req.body);
+    const result = await userRepository.save(user)
+    res.json(result)
 })
 
 
 app.delete("/users/:id", async (req: Request, res: Response) => {
-    await userRepository.delete(Number(req.params.id))
+    const result = await userRepository.delete(Number(req.params.id))
+    if(result.affected === 0) return res.status(404).json({message : "User not found"})
     res.json({ message: "User deleted" })
 })
 
 
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000")
+app.listen(5000, () => {
+    console.log("Server running on http://localhost:5000")
 })
