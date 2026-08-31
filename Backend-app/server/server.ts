@@ -29,9 +29,11 @@ const productRepository = PostgresDataSource.getRepository(Product)
 const app = express()
 app.use(express.json())
 
+
 app.get("/", async (req: Request, res: Response) => {
     res.send("hello")
 })
+
 
 
 app.get("/users", async (req: Request, res: Response) => {
