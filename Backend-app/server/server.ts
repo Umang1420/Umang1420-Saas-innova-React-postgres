@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { Usere, Product } from "../entity/user.js"
+import { User2, Product } from "../entity/user.js"
 import express from "express"
 import { type Request, type Response } from "express"
 
@@ -12,7 +12,7 @@ const PostgresDataSource = new DataSource({
     username: "postgres",
     password: "Umang#2005",
     database: "firstdb",
-    entities: [Usere, Product],
+    entities: [User2, Product],
     synchronize: true,
 })
 
@@ -22,7 +22,7 @@ try {
 } catch (error) {
     console.error("Error during Data Source initialization", error)
 }
-const userRepository = PostgresDataSource.getRepository(Usere)
+const userRepository = PostgresDataSource.getRepository(User2)
 const productRepository = PostgresDataSource.getRepository(Product)
 
 
