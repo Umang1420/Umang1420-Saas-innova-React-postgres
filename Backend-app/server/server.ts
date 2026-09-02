@@ -23,6 +23,7 @@ try {
 } catch (error) {
     console.error("Error during Data Source initialization", error)
 }
+
 const userRepository = PostgresDataSource.getRepository(User2)
 const productRepository = PostgresDataSource.getRepository(Product)
 
@@ -39,13 +40,15 @@ app.get("/", async (req: Request, res: Response) => {
 
 
 app.get("/users", async (req: Request, res: Response) => {
-    const users = await userRepository.find()
+    const users = await userRepository.find({order:{
+        id : "ASC"
+    }})
     res.json(users)
 })
 app.get("/product", async (req: Request, res: Response) => {
     const product = await productRepository.find()
     res.json(product)
-})
+});
 
 
 app.get("/users/:id", async (req: Request, res: Response) => {
@@ -86,12 +89,11 @@ app.post("/product", async (req: Request, res: Response) => {
     res.json(result)
 })
 
-app.put("/users/:id", async (req: Request, res: Response) => {
+app.patch("/users/:id", async (req: Request, res: Response) => {
     //First way
 
     // await userRepository.update(Number(req.params.id), req.body)
-    // const updatedUser = await userRepository.findOneBy({ id: Number(req.params.id) })       // in this method the issue was after updating data it changes the order of data
-                                                                                               // last updated data will be the first one after update. Second and thired method resolves this issue
+    // const updatedUser = await userRepository.findOneBy({ id: Number(req.params.id) })      
     // res.json(updatedUser)
 
     //Secound way
@@ -121,11 +123,10 @@ app.put("/users/:id", async (req: Request, res: Response) => {
     const userId = Number(req.params.id)
     const user = await userRepository.findOneBy({id: userId})
     if(!user) return res.status(404).json({message:"User not found"});
-    userRepository.merge(user, req.body);
+    userRepository.merge(user,);
     const result = await userRepository.save(user)
     res.json(result)
 })
-
 
 app.delete("/users/:id", async (req: Request, res: Response) => {
     const result = await userRepository.delete(Number(req.params.id))
