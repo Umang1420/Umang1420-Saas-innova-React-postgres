@@ -123,10 +123,27 @@ app.patch("/users/:id", async (req: Request, res: Response) => {
     const userId = Number(req.params.id)
     const user = await userRepository.findOneBy({id: userId})
     if(!user) return res.status(404).json({message:"User not found"});
-    userRepository.merge(user,);
+    userRepository.merge(user,req.body);
     const result = await userRepository.save(user)
     res.json(result)
 })
+
+
+// app.patch('/users/:id', async (req, res) => {
+//   const userId = Number(req.params.id);         
+//   const newFirstName = req.body.firstName; 
+
+//   try {
+
+//     await userRepository.query("UPDATE users SET firstName = ? WHERE id = ?", [newFirstName, userId]);
+    
+//     res.json({ message: "User updated successfully" });
+//   } catch (error) {
+//     res.status(500).json({ error: "Database update failed" });
+//   }
+// });
+
+
 
 app.delete("/users/:id", async (req: Request, res: Response) => {
     const result = await userRepository.delete(Number(req.params.id))

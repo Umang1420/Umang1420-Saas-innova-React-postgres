@@ -12,6 +12,10 @@ interface User {
 const App = () => {
 
   const [users, setUsers] = useState<User[]>([]);
+  const [isAdd,setIsAdd] = useState<boolean>(false);
+  const [fName,setFName] = useState<string>();
+  const [lName,setLName] = useState<string>();
+  const [active,setActive] = useState<string>();
 
   useEffect(() => {
     fetch('http://localhost:5000/users')
@@ -25,13 +29,13 @@ const App = () => {
 
 
  const handleAdd = () => {
-    let fName = prompt("Enter new First Name:");
-    let lName = prompt("Enter new Last Name:");
-    let activeInput = prompt("Is user active? (type 'true' or 'false'):");
+    // setFName(prompt("Enter new First Name:");)
+    // let lName = prompt("Enter new Last Name:");
+    // let activeInput = prompt("Is user active? (type 'true' or 'false'):");
 
-    if (!fName || !lName || !activeInput) return;
+    if (!fName || !lName || !active) return;
 
-    const isUserActive = activeInput.toLowerCase() === 'true';
+    const isUserActive = active.toLowerCase() === 'true';
 
     fetch(`http://localhost:5000/users/`, {
       method: 'POST',
@@ -49,9 +53,12 @@ const App = () => {
        setUsers((prevUsers) => [...prevUsers, newUser]);
     })
      .catch((err) => console.error("Error creating user:", err));
+
   };
 
   const handleEdit = (userId: number) => { 
+    const confirmEdit = window.confirm("Note : don't left any field empty otherwise data will be not updated");
+    if (!confirmEdit) return;
 
     let fName = prompt("Update First Name:");
     let lName = prompt("Update Last Name:");
@@ -101,15 +108,17 @@ const App = () => {
   };
 
   return (
-    <div className="content">
-      <h1>RsBuild with React</h1>
-      <p>Start building amazing things with RsBuild.</p>
-      
-      <div>
+    <div>
         <h2>User List</h2>
-
-        <div>
-          <button onClick={handleAdd}>Add Users</button>
+        <button onClick={() => setIsAdd((prev) => !prev)}>{isAdd ? 'Hide Form' : 'Add Users'}</button><br></br><br></br>
+        <div style={{display : isAdd ? 'block' : 'none'}}>
+          <label>First Name:</label>
+          <input type='text' value={fName} onChange={(e) => setFName(e.target.value)}/><br></br><br></br>
+          <label>Last Name:</label>
+          <input type='text' value={lName} onChange={(e) => setLName(e.target.value)}/><br></br><br></br>
+          <label>Is user Active?(true or false only):</label>
+          <input type='text' value={active} onChange={(e) => setActive(e.target.value)}/><br></br><br></br>
+          <button onClick={handleAdd} >Submit</button>
         </div>
         <ul>
           {users.map((user) => (
@@ -122,7 +131,6 @@ const App = () => {
             </li>
           ))}
         </ul>
-      </div>
     </div>
   );  
 };
