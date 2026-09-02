@@ -96,7 +96,7 @@ app.patch("/users/:id", async (req: Request, res: Response) => {
     // const updatedUser = await userRepository.findOneBy({ id: Number(req.params.id) })      
     // res.json(updatedUser)
 
-    //Secound way
+    //Second way
 
     // const userId = Number(req.params.id)
 

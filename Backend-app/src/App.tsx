@@ -50,51 +50,23 @@ const App = () => {
     })
      .catch((err) => console.error("Error creating user:", err));
   };
-//   const handleAdd = () => {
-//   let fName = prompt("Enter First Name:");
-//   let lName = prompt("Enter Last Name:");
-//   let activeInput = prompt("Is user active? (type 'true' or 'false'):");
-  
-//   if (!fName || !lName || !activeInput) return;
 
-//   // Convert the text input string ("true") into an actual boolean
-//   const isUserActive = activeInput.toLowerCase() === 'true';
+  const handleEdit = (userId: number) => { 
 
-//   fetch(`http://localhost:5000/users/`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ 
-//       firstName: fName, 
-//       lastName: lName, 
-//       isActive: isUserActive 
-//     })
-//   })
-//     .then((res) => {
-//       if (!res.ok) throw new Error("Failed to Insert user");
-//       return res.json(); // This must return the newly created user object with its new database ID
-//     })
-//     .then((newUser: User) => {
-//       //  FIX: Append the new user to the end of your existing state array
-//       setUsers((prevUsers) => [...prevUsers, newUser]);
-//     })
-//     .catch((err) => console.error("Error creating user:", err));
-// };
+    let fName = prompt("Update First Name:");
+    let lName = prompt("Update Last Name:");
+    let activeInput = prompt("Is user active? (type 'true' or 'false'):");
 
+    if (!fName || !lName || !activeInput) return;
 
-  const handleEdit = (userId: number) => {
-    console.log("Target User ID:", userId); 
-
-    let input = prompt("Enter new First Name:");
-    if (!input) return;
+    const isUserActive = activeInput.toLowerCase() === 'true';
 
     fetch(`http://localhost:5000/users/${userId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ firstName: input })
+      body: JSON.stringify({ firstName: fName , lastName : lName , isActive : isUserActive})
     })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to update user");
@@ -103,7 +75,7 @@ const App = () => {
       .then(() => {
     
         setUsers((prevUsers) =>
-          prevUsers.map((user) => (user.id === userId ? { ...user, firstName: input } : user))
+          prevUsers.map((user) => (user.id === userId ? { ...user,  firstName: fName , lastName : lName , isActive : isUserActive } : user))
         );
       })
       .catch((err) => console.error("Error updating user:", err));
@@ -130,8 +102,8 @@ const App = () => {
 
   return (
     <div className="content">
-      <h1>Rsbuild with React</h1>
-      <p>Start building amazing things with Rsbuild.</p>
+      <h1>RsBuild with React</h1>
+      <p>Start building amazing things with RsBuild.</p>
       
       <div>
         <h2>User List</h2>
