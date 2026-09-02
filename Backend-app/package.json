@@ -8,15 +8,19 @@
     "dev": "rsbuild",
     "server": "tsx --tsconfig tsconfig.server.json server/server.js",
     "preview": "rsbuild preview",
-    "start": "npx tsx src/server.ts"
+    "start": "npx tsx server/server.ts"
   },
   "devDependencies": {
+    "@rsbuild/core": "^2.2.1",
+    "@rsbuild/plugin-react": "^2.1.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/morgan": "^1.9.10",
     "@types/node": "^26.3.0",
     "@types/pg": "^8.23.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "nodemon": "^3.1.14",
     "ts-node": "^10.9.2",
     "tsx": "^4.23.12",
@@ -32,6 +36,8 @@
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
     "pg": "^8.23.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^1.1.0"
   }

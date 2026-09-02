@@ -3,6 +3,7 @@ import { DataSource } from "typeorm"
 import { User2, Product } from "../entity/user.js"
 import express from "express"
 import { type Request, type Response } from "express"
+import cors from "cors"
 
 
 const PostgresDataSource = new DataSource({
@@ -27,6 +28,7 @@ const productRepository = PostgresDataSource.getRepository(Product)
 
 
 const app = express()
+app.use(cors());
 app.use(express.json())
 
 
@@ -135,3 +137,4 @@ app.delete("/users/:id", async (req: Request, res: Response) => {
 app.listen(5000, () => {
     console.log("Server running on http://localhost:5000")
 })
+
