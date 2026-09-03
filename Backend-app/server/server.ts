@@ -47,7 +47,7 @@ app.get("/users", async (req: Request, res: Response) => {
 })
 app.get("/product", async (req: Request, res: Response) => {
     const product = await productRepository.find()
-    res.json(product)
+    res.json(product)   
 });
 
 
