@@ -5,6 +5,11 @@ import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
 import { Products } from './entities/product.entity.js';
 
+export enum Role{
+  User = 'user',
+  Admin = 'admin'
+}
+
 @Injectable()
 export class ProductsService {
   constructor(

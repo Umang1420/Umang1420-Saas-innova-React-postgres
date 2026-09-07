@@ -6,6 +6,9 @@ import { DogsController } from './dogs/dogs.controller.js';
 import { CatsModule } from './cats/cats.module.js';
 import { ProductsModule } from './products/products.module.js';
 import { Products } from './products/entities/product.entity.js';
+import { AuthModule } from './auth/auth.module.js';
+import { UsersModule } from './users/users.module.js';
+import { UsersService } from './users/users.service.js';
 
 @Module({
   imports: [
@@ -20,8 +23,10 @@ import { Products } from './products/entities/product.entity.js';
       synchronize : true
     }),
     ProductsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController, DogsController],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}

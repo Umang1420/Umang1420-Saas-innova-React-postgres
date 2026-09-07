@@ -1,13 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, SetMetadata } from '@nestjs/common';
 import { ProductsService } from './products.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
+import { Role } from '../products/products.service.js';
+
+
+const ROLES_KEY = 'roles';
+const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @Roles(Role.Admin)
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productsService.create(createProductDto);
   }
