@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
@@ -9,6 +10,7 @@ import { Products } from './products/entities/product.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { UsersService } from './users/users.service.js';
+import { RolesGuard } from './auth/roles.guard.js';
 
 @Module({
   imports: [
@@ -27,6 +29,10 @@ import { UsersService } from './users/users.service.js';
     UsersModule,
   ],
   controllers: [AppController, DogsController],
-  providers: [AppService, UsersService],
+  providers: [AppService, UsersService,  {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  }],
 })
+
 export class AppModule {}
