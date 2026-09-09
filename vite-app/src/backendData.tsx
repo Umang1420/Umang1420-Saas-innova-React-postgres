@@ -12,6 +12,9 @@ export default function Data() {
   const [password, setPassword] = useState("");
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [error, setError] = useState("");
+  const [isAdd,setIsAdd] = useState(false);
+  const [productName,setProductName] = useState("")
+  const [productPrice,setProductPrice] = useState("")
 
   useEffect(() => {
     if (!token) {
@@ -74,6 +77,82 @@ export default function Data() {
     }
   };
 
+  const handleAdd = () =>{
+    // let productName = prompt("Enter Product Name");
+    // let productPrice = prompt("Enter Product Price");
+
+    fetch(`http://localhost:4000/products/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+         Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: productName,
+        price: productPrice,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to Insert user");
+        return res.json();
+      })
+
+      .then((newProduct: Product) => {
+        setProducts((prevProduct) => [...prevProduct, newProduct]);
+      })
+      .catch((err) => console.error("Error creating user:", err));
+
+      setProductName("")
+      setProductPrice("");
+      setIsAdd(false);
+  }
+
+    const handleEdit = (productId:number) =>{
+      const newProductName = prompt("Enter Product Name");
+      const newProductPrice = prompt("Enter Product Price");
+
+      if (newProductName === null || newProductPrice === null) {
+        return;
+      }
+
+      const numericPrice = Number(newProductPrice);
+
+      fetch(`http://localhost:4000/products/${productId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: newProductName,
+          price: numericPrice,
+        }),
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to Insert user");
+          return res.json();
+        })
+
+        .then(() => {
+          setProducts((prevProduct) =>
+            prevProduct.map((product) =>
+              product.id === productId
+                ? {
+                    ...product,
+                    name: newProductName,
+                    price: numericPrice,
+                  }
+                : product,
+            ),
+          );
+        })
+        .catch((err) => console.error("Error creating user:", err));
+
+      setProductName("")
+      setProductPrice("");
+      setIsAdd(false);
+  }
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -121,6 +200,23 @@ export default function Data() {
         <button onClick={handleLogout}>Logout</button>
       </div>
       <br />
+      <button onClick={()=>setIsAdd((pre)=> !pre)}>{isAdd ? 'Cancel' : 'Add Product'}</button>
+      <div style={{display : isAdd ? 'block':'none'}}>
+        <label>Product Name:</label><br/>
+        <input 
+        type="text"
+        value={productName}
+        onChange={(e) => setProductName(e.target.value)}
+        /><br/><br/>
+        <label>Product Price:</label><br/>
+        <input 
+        type="text"
+        value={productPrice}
+        onChange={(e) => setProductPrice(e.target.value)}
+        /><br/><br/>
+        <button onClick={handleAdd}>Add</button>
+      </div>
+
       <table style={{ margin: "10px", border: "1px solid black", borderCollapse: "collapse", textAlign: "left" }}>
         <thead>
           <tr style={{ backgroundColor: "#f2f2f2", borderBottom: "1px solid black" }}>
@@ -135,25 +231,13 @@ export default function Data() {
               <td style={{ padding: "10px", border: "1px solid black" }}>{product.name}</td>
               <td style={{ padding: "10px", border: "1px solid black" }}>₹ {product.price}</td>
               <td style={{ padding: "10px", border: "1px solid black" }}>
-                <button style={{ marginRight: "5px" }}>Edit</button>
+                <button style={{ marginRight: "5px" }} onClick={()=>handleEdit(product.id)}>Edit</button>
                 <button>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <br />
-
-      <h3>List View</h3>
-      <br />
-
-      <ul>
-        {products.map((product: Product) => (
-          <li key={product.id}>
-            {product.name} - ₹ {product.price} <button>Edit</button> <button>Delete</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

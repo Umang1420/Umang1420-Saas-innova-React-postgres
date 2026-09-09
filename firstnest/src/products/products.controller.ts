@@ -11,7 +11,7 @@ const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 
 @Controller('products')
 export class ProductsController {
-  constructor(public readonly productsService: ProductsService) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Post()
   @UseGuards(AuthGuard, RolesGuard)

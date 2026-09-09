@@ -25,7 +25,7 @@ const App = () => {
   }, []);
 
   const handleAdd = () => {
-    // setFName(prompt("Enter new First Name:");)
+    //  setFName(prompt("Enter new First Name:");)
     // let lName = prompt("Enter new Last Name:");
     // let activeInput = prompt("Is user active? (type 'true' or 'false'):");
 
