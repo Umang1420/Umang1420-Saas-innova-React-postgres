@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, SetMetadata, UseGuar
 import { ProductsService } from './products.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
 import { UpdateProductDto } from './dto/update-product.dto.js';
-import { Role } from '../products/products.service.js';
+import { Role } from '../enums/role.enum.js';
 import { AuthGuard } from '../auth/auth.guard.js';
-
+import { RolesGuard } from '../auth/roles.guard.js'
 
 const ROLES_KEY = 'roles';
 const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
@@ -14,7 +14,7 @@ export class ProductsController {
   constructor(public readonly productsService: ProductsService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.User)
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productsService.create(createProductDto);

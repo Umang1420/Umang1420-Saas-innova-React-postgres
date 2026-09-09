@@ -40,7 +40,7 @@ function AppLayout() {
         <Link className="links" to="/quiz">Quiz</Link>
         <Link className="links" to="/window">Window</Link>
         <Link className="links" to="/focus">Focus</Link>
-        <Link className="links" to="/data">Backend data</Link>
+        <Link className="links" to="/data">Product Management</Link>
       </nav>
       <Outlet />
     </>

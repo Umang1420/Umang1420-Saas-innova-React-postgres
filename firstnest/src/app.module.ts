@@ -10,7 +10,6 @@ import { Products } from './products/entities/product.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { UsersService } from './users/users.service.js';
-import { RolesGuard } from './auth/roles.guard.js';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
@@ -38,11 +37,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     UsersModule,
   ],
   controllers: [AppController, DogsController],
-  providers: [AppService, UsersService,  {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },
-  {
+  providers: [AppService, UsersService, {
     provide: APP_GUARD,
     useClass: ThrottlerGuard,
   }],
