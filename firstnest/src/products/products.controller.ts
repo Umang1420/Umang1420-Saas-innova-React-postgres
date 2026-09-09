@@ -13,7 +13,7 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
-  @Roles(Role.Admin)
+  @Roles(Role.User)
   async create(@Body() createProductDto: CreateProductDto) {
     return await this.productsService.create(createProductDto);
   }
