@@ -18,7 +18,11 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.productsRepository.find();
+    return await this.productsRepository.find(
+      {order:{
+        id : "ASC"
+    }}
+    );
   }
 
   async findOne(id: number) {

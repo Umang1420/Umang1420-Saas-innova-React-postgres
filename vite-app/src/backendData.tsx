@@ -153,6 +153,28 @@ export default function Data() {
       setIsAdd(false);
   }
 
+  const handleDelete = (productId: number) => {
+   
+    const confirmDelete = window.confirm("Are you sure you want to delete this Product?");
+    
+    if (!confirmDelete) return;
+
+    fetch(`http://localhost:4000/products/${productId}`, {
+      method: "DELETE",
+      headers: {
+            Authorization: `Bearer ${token}`,
+          },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete user");
+        return res.json();
+      })
+      .then(() => {
+        setProducts((prevProduct) => prevProduct.filter((product) => product.id !== productId));
+      })
+      .catch((err) => console.error("Error deleting user:", err));
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -217,27 +239,30 @@ export default function Data() {
         <button onClick={handleAdd}>Add</button>
       </div>
 
-      <table style={{ margin: "10px", border: "1px solid black", borderCollapse: "collapse", textAlign: "left" }}>
-        <thead>
-          <tr style={{ backgroundColor: "#f2f2f2", borderBottom: "1px solid black" }}>
-            <th style={{ padding: "10px", border: "1px solid black" }}>Product Name</th>
-            <th style={{ padding: "10px", border: "1px solid black" }}>Product Price</th>
-            <th style={{ padding: "10px", border: "1px solid black" }}>Modification</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product: Product) => (
-            <tr key={product.id} style={{ borderBottom: "1px solid black" }}>
-              <td style={{ padding: "10px", border: "1px solid black" }}>{product.name}</td>
-              <td style={{ padding: "10px", border: "1px solid black" }}>₹ {product.price}</td>
-              <td style={{ padding: "10px", border: "1px solid black" }}>
-                <button style={{ marginRight: "5px" }} onClick={()=>handleEdit(product.id)}>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <div>
+            <table style={{ margin: "10px", border: "1px solid black", borderCollapse: "collapse", textAlign: "left" }}>
+                <thead>
+                <tr style={{ backgroundColor: "#f2f2f2", borderBottom: "1px solid black" }}>
+                    <th style={{ padding: "10px", border: "1px solid black" }}>Product Name</th>
+                    <th style={{ padding: "10px", border: "1px solid black" }}>Product Price</th>
+                    <th style={{ padding: "10px", border: "1px solid black" }}>Modification</th>
+                </tr>
+                </thead>
+                <tbody>
+                {products.map((product: Product) => (
+                    <tr key={product.id} style={{ borderBottom: "1px solid black" }}>
+                    <td style={{ padding: "10px", border: "1px solid black" }}>{product.name}</td>
+                    <td style={{ padding: "10px", border: "1px solid black" }}>₹ {product.price}</td>
+                    <td style={{ padding: "10px", border: "1px solid black" }}>
+                        <button style={{ marginRight: "5px" }} onClick={()=>handleEdit(product.id)}>Edit</button>
+                        <button style={{color:'red'}} onClick={()=>handleDelete(product.id)}>Delete</button>
+                    </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+        </div>
+
     </div>
   );
 }
