@@ -4,13 +4,13 @@ method: GET
 scripts:
   - type: afterResponse
     code: |-
-      pm.test("Status code is 401", function () {
-          pm.response.to.have.status(401);
+      pm.test("Status code is 200", function () {
+          pm.response.to.have.status(200);
       });
 
-      pm.test("Response has correct error message", function () {
-          var jsonData = pm.response.json();
-          pm.expect(jsonData.message).to.eql("Unauthorized");
-          pm.expect(jsonData.statusCode).to.eql(401);
+      pm.test("Response has correct user data", function () {
+          const jsonData = pm.response.json();
+          pm.expect(jsonData.username).to.eql("maria");
+          pm.expect(jsonData.roles).to.include("admin");
       });
 order: 1787553220078

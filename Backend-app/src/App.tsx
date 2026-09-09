@@ -19,7 +19,6 @@ const App = () => {
     fetch("http://localhost:5000/users")
       .then((res) => res.json())
       .then((data: User[]) => {
-        // const sortedData = data.sort((a, b) => a.id - b.id);
         setUsers(data);
       })
       .catch((err) => console.error("Error fetching data:", err));
