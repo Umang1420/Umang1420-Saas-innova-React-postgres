@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
 import { UsersService } from './users/users.service.js';
 import { RolesGuard } from './auth/roles.guard.js';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -24,14 +25,26 @@ import { RolesGuard } from './auth/roles.guard.js';
       entities :[Products],
       synchronize : true
     }),
+     ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     ProductsModule,
-    AuthModule,
+    AuthModule, 
     UsersModule,
   ],
   controllers: [AppController, DogsController],
   providers: [AppService, UsersService,  {
     provide: APP_GUARD,
     useClass: RolesGuard,
+  },
+  {
+    provide: APP_GUARD,
+    useClass: ThrottlerGuard,
   }],
 })
 
