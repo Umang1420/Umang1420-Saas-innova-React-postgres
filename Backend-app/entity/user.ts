@@ -38,7 +38,7 @@ export class Product{
     @CreateDateColumn()
     CreatedAt!: Date
 
-    @ManyToMany(()=>User2)
+    @ManyToMany(() => User2)
     @JoinTable()
     User!: User2[]
 }

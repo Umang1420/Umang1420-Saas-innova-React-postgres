@@ -18,6 +18,7 @@ import Cart from "../cart.tsx"
 import Quiz from "../quiz.tsx"
 import Window from "../window.tsx"
 import Focus from "../focus.tsx";
+import Data from "@/backendData.tsx";
 
 const user = "Alex";
 const theme = "dark";
@@ -39,6 +40,7 @@ function AppLayout() {
         <Link className="links" to="/quiz">Quiz</Link>
         <Link className="links" to="/window">Window</Link>
         <Link className="links" to="/focus">Focus</Link>
+        <Link className="links" to="/data">Backend data</Link>
       </nav>
       <Outlet />
     </>
@@ -83,7 +85,8 @@ const router = createBrowserRouter([
       { path: "/cart", element: <Cart /> },
       { path: "/quiz", element: <Quiz /> },
       { path: "/window", element: <Window /> },
-      { path: "/focus", element: <Focus /> }
+      { path: "/focus", element: <Focus /> },
+      { path: "/data", element: <Data /> }
     ],
   },
 ]);
