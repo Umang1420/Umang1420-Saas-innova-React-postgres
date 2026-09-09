@@ -21,21 +21,29 @@ export class ProductsController {
   }
 
   @Get()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.User)
   async findAll() {
     return await this.productsService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.User)
   async findOne(@Param('id') id: string) {
     return await this.productsService.findOne(+id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.User)
   async update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return await this.productsService.update(+id, updateProductDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.User)
   async remove(@Param('id') id: string) {
     return await this.productsService.remove(+id);
   }
