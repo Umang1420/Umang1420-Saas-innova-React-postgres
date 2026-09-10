@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import { Users } from "../../users/entities/user.js";
+
 @Entity()
 export class Products {
   @PrimaryGeneratedColumn()
@@ -10,7 +11,10 @@ export class Products {
 
   @Column('decimal')
   price: number;
-   
+
+  @Column({ nullable: true })
+  createdBy: number;
+
   @ManyToMany(() => Users, (user) => user.product)
-    users: Users[];
+  users: Users[];
 }

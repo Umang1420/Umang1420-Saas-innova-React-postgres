@@ -39,7 +39,7 @@ function Counter() {
     setCount((pre)=>(pre+1))
   }
 
-  const handleAdd = (e: React.FormEvent) => {
+  const handleAdd = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!inputText.trim()) return
 

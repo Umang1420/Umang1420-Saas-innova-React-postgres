@@ -12,22 +12,24 @@ export class ProductsService {
     private productsRepository: Repository<Products>,
   ) {}
 
-  async create(createProductDto: CreateProductDto) {
+  async create(createProductDto: CreateProductDto & { createdBy?: number }) {
     const product = this.productsRepository.create(createProductDto);
     return await this.productsRepository.save(product);
   }
 
+  async findAllByUser(userId: number) {
+    return await this.productsRepository.find({
+      where: { createdBy: userId },
+      order: { id: 'ASC' },
+    });
+  }
+
   async findAll() {
-    return await this.productsRepository.find(
-    {
-        order:{
-        id : "ASC"
-        },
-        where : {
-          
-        }
-    }
-    );
+    return await this.productsRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
   }
 
   async findOne(id: number) {
