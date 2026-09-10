@@ -9,6 +9,7 @@ interface Product {
 export default function Data() {
   const [products, setProducts] = useState<Product[]>([])
   const [username, setUsername] = useState("")
+  const [user_email, setUser_Email] = useState("")
   const [password, setPassword] = useState("")
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
@@ -80,9 +81,25 @@ export default function Data() {
     }
 
     setUsername("")
+    setUser_Email("")
     setPassword("")
   }
 
+  const handleSignUp = async () => {
+    const res = await fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user_email, password }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Invalid username or password")
+      }
+  }
   const handleAdd = () => {
     // let productName = prompt("Enter Product Name");
     // let productPrice = prompt("Enter Product Price");
@@ -246,8 +263,8 @@ export default function Data() {
                 Username
                 <input
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={user_email}
+                  onChange={(e) => setUser_Email(e.target.value)}
                   style={{ width: "95%", padding: "8px", marginTop: "4px" }}
                 />
               </label>
@@ -263,6 +280,7 @@ export default function Data() {
               {error && <p style={{ color: "red" }}>{error}</p>}
               <button
                 type="submit"
+                onClick={handleSignUp}
                 style={{ padding: "10px", cursor: "pointer" }}
               >
               Sign Up
