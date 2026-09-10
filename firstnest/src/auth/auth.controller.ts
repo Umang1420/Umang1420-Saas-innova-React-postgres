@@ -11,7 +11,12 @@ export class AuthController {
   signIn(@Body() signInDto: Record<string, string>) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
-
+  
+  @Post('refresh')
+    @HttpCode(HttpStatus.OK)
+    async refresh(@Body() body: { userId: number; refreshToken: string }) {
+      return this.authService.refreshTokens(body.userId, body.refreshToken);
+  }
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req: any) {

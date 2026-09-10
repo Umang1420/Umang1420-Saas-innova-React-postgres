@@ -9,7 +9,7 @@ interface Product {
 export default function Data() {
   const [products, setProducts] = useState<Product[]>([])
   const [username, setUsername] = useState("")
-  const [user_email, setUser_Email] = useState("")
+  const [userEmail, setUserEmail] = useState("")
   const [password, setPassword] = useState("")
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
@@ -81,7 +81,7 @@ export default function Data() {
     }
 
     setUsername("")
-    setUser_Email("")
+    setUserEmail("")
     setPassword("")
   }
 
@@ -91,7 +91,7 @@ export default function Data() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_email, password }),
+        body: JSON.stringify({ userEmail, password }),
       })
 
       const data = await res.json()
@@ -99,6 +99,7 @@ export default function Data() {
       if (!res.ok) {
         throw new Error(data?.message || "Invalid username or password")
       }
+      setIsLoggedIn(true)
   }
   const handleAdd = () => {
     // let productName = prompt("Enter Product Name");
@@ -251,8 +252,8 @@ export default function Data() {
             </button>
           </div>
         </div>
-
-
+      </form>
+      <form onSubmit={handleSignUp}>
           <div style={{ display: isLoggedIn ? "block" : "none" }}>
             <h3>Sign Up</h3>
             <br></br>
@@ -263,8 +264,8 @@ export default function Data() {
                 Username
                 <input
                   type="text"
-                  value={user_email}
-                  onChange={(e) => setUser_Email(e.target.value)}
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                   style={{ width: "95%", padding: "8px", marginTop: "4px" }}
                 />
               </label>
@@ -280,7 +281,6 @@ export default function Data() {
               {error && <p style={{ color: "red" }}>{error}</p>}
               <button
                 type="submit"
-                onClick={handleSignUp}
                 style={{ padding: "10px", cursor: "pointer" }}
               >
               Sign Up
