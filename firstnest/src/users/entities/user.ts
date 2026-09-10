@@ -12,7 +12,7 @@ export class Users {
     @Column()
     password: string;
 
-    @Column({default:'refreshumangsecratetoken'})
+    @Column()
     refreshToken: string;
 
     @Column({ default: 'user' })
