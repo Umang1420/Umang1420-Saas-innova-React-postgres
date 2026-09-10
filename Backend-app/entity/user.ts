@@ -17,28 +17,28 @@ export class User2 {
     isActive!: boolean
 }
 
-@Entity()
-export class Product{
+// @Entity()
+// export class Product{
 
-    @PrimaryGeneratedColumn()
-    id!: number
+//     @PrimaryGeneratedColumn()
+//     id!: number
 
-    @Column({type  : "varchar"})
-    title!: string
+//     @Column({type  : "varchar"})
+//     title!: string
 
-    @Column({type  : "int"})
-    price!: number
+//     @Column({type  : "int"})
+//     price!: number
 
-    @Column({type  : "varchar"})
-    description!: string
+//     @Column({type  : "varchar"})
+//     description!: string
 
-    @Column({type : "boolean"})
-    isActive!: boolean
+//     @Column({type : "boolean"})
+//     isActive!: boolean
 
-    @CreateDateColumn()
-    CreatedAt!: Date
+//     @CreateDateColumn()
+//     CreatedAt!: Date
 
-    @ManyToMany(() => User2)
-    @JoinTable()
-    User!: User2[]
-}
+//     @ManyToMany(() => User2)
+//     @JoinTable()
+//     User!: User2[]
+// }

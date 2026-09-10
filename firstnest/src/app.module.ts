@@ -9,8 +9,9 @@ import { ProductsModule } from './products/products.module.js';
 import { Products } from './products/entities/product.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
-import { UsersService } from './users/users.service.js';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { Users } from './users/entities/user.js';
+import { UsersController } from './users/users.controller.js';
 
 @Module({
   imports: [
@@ -21,10 +22,11 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
       username: 'postgres',
       password: 'Umang#2005',
       database: 'firstdb',
-      entities :[Products],
-      synchronize : true
+      entities: [Products, Users],
+      autoLoadEntities: true,
+      synchronize: true
     }),
-     ThrottlerModule.forRoot({
+    ThrottlerModule.forRoot({
       throttlers: [
         {
           ttl: 60000,
@@ -34,13 +36,16 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
     }),
     ProductsModule,
     AuthModule, 
-    UsersModule,
+    UsersModule, 
   ],
-  controllers: [AppController, DogsController],
-  providers: [AppService, UsersService, {
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard,
-  }],
-})
+  controllers: [AppController, DogsController, UsersController],
+  providers: [
+    AppService, 
 
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    }
+  ],
+})
 export class AppModule {}

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
+import { Users } from "../../users/entities/user.js";
 @Entity()
 export class Products {
   @PrimaryGeneratedColumn()
@@ -9,4 +10,7 @@ export class Products {
 
   @Column('decimal')
   price: number;
+   
+  @ManyToMany(() => Users, (user) => user.product)
+    users: Users[];
 }

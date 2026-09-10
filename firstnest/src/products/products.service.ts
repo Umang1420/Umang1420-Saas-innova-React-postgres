@@ -19,9 +19,14 @@ export class ProductsService {
 
   async findAll() {
     return await this.productsRepository.find(
-      {order:{
+    {
+        order:{
         id : "ASC"
-    }}
+        },
+        where : {
+          
+        }
+    }
     );
   }
 
