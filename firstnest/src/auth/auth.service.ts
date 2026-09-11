@@ -52,7 +52,7 @@ export class AuthService {
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        expiresIn: '60s',
+        expiresIn: '5m',
       }),
       this.jwtService.signAsync(payload, {
         expiresIn: '7d',

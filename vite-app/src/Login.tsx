@@ -12,8 +12,7 @@ export default function Data() {
   const [error, setError] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
-
-
+   
   const handleLogin = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError("")
@@ -70,15 +69,16 @@ export default function Data() {
       <div style={{ maxWidth: "400px", margin: "20px auto", padding: "20px" }}>
         
         <form onSubmit={handleLogin}>
+          
           <div style={{display: isLoggedIn ? "none" : "block"}}>
           <div
             style={{ display: "flex", flexDirection: "column", gap: "10px"}}
           >
             <h3>Login</h3>
             <label>
-              Username
+              User Email
               <input
-                type="text"
+                type="email"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 style={{ width: "95%", padding: "8px", marginTop: "4px" }}
@@ -87,7 +87,7 @@ export default function Data() {
             <label>
               Password
               <input
-                type="password"
+                type="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "95%", padding: "8px", marginTop: "4px" }}
@@ -96,6 +96,7 @@ export default function Data() {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button
               type="submit"
+              onClick={()=>handleLogin((e)=>(e))}
               style={{ padding: "10px", cursor: "pointer" }}
             >
               Login
@@ -118,9 +119,9 @@ export default function Data() {
               style={{ display: "flex", flexDirection: "column", gap: "10px" }}
             >
               <label>
-                Username
+                User Email
                 <input
-                  type="text"
+                  type="email"
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                   style={{ width: "95%", padding: "8px", marginTop: "4px" }}
@@ -129,7 +130,7 @@ export default function Data() {
               <label>
                 Password
                 <input
-                  type="password"
+                  type="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ width: "95%", padding: "8px", marginTop: "4px" }}

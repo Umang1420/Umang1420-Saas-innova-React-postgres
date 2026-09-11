@@ -20,6 +20,9 @@ export class UsersService {
       relations: { product: true } 
     });
   }
+   async findAll() {
+    return await this.userRepository.find();
+  }
 
   async createUserWithProducts(userData: Partial<Users>, productIds: number[]): Promise<Users> {
     const foundProducts = [];

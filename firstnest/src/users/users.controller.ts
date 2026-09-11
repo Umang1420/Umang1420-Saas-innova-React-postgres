@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { UsersService } from './users.service.js';
 import { Users } from './entities/user.js';
 
@@ -6,6 +6,11 @@ import { Users } from './entities/user.js';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Get()
+  async findAll() {
+    return await this.usersService.findAll();
+  }
+  
   @Post()
   async createUser(
     @Body() body: { userEmail?: string; password?: string; refreshToken?: string; productIds?: number[] }
@@ -22,3 +27,7 @@ export class UsersController {
     return await this.usersService.createUserWithProducts(userData, productIds);
   }
 }
+function findAll() {
+  throw new Error('Function not implemented.');
+}
+

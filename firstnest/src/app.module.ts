@@ -7,7 +7,7 @@ import { ProductsModule } from './products/products.module.js';
 import { Products } from './products/entities/product.entity.js';
 import { AuthModule } from './auth/auth.module.js';
 import { UsersModule } from './users/users.module.js';
-// import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { Users } from './users/entities/user.js';
 import { UsersController } from './users/users.controller.js';
 
@@ -23,14 +23,14 @@ import { UsersController } from './users/users.controller.js';
       autoLoadEntities: true,
       synchronize: true
     }),
-    // ThrottlerModule.forRoot({
-    //   throttlers: [
-    //     {
-    //       ttl: 60000,
-    //       limit: 10,
-    //     },
-    //   ],
-    // }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: 60000,
+          limit: 10,
+        },
+      ],
+    }),
     ProductsModule,
     AuthModule, 
     UsersModule, 
@@ -39,10 +39,10 @@ import { UsersController } from './users/users.controller.js';
   providers: [
     AppService, 
 
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: ThrottlerGuard,
-    // }
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    }
   ],
 })
 export class AppModule {}
