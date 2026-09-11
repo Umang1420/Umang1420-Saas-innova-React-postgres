@@ -87,7 +87,7 @@ export default function Data() {
             <label>
               Password
               <input
-                type="current-password"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={{ width: "95%", padding: "8px", marginTop: "4px" }}
@@ -96,7 +96,6 @@ export default function Data() {
             {error && <p style={{ color: "red" }}>{error}</p>}
             <button
               type="submit"
-              onClick={()=>handleLogin((e)=>(e))}
               style={{ padding: "10px", cursor: "pointer" }}
             >
               Login
@@ -130,7 +129,7 @@ export default function Data() {
               <label>
                 Password
                 <input
-                  type="current-password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   style={{ width: "95%", padding: "8px", marginTop: "4px" }}

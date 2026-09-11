@@ -1,6 +1,6 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-import { User2, Product } from "../entity/user.js"
+import { User2 } from "../entity/user.js"
 import express from "express"
 import { type Request, type Response } from "express"
 import cors from "cors"
@@ -13,7 +13,7 @@ const PostgresDataSource = new DataSource({
     username: "postgres",
     password: "Umang#2005",
     database: "firstdb",
-    entities: [User2, Product],
+    entities: [User2],
     synchronize: true,
 })
 
@@ -25,7 +25,7 @@ try {
 }
 
 const userRepository = PostgresDataSource.getRepository(User2)
-const productRepository = PostgresDataSource.getRepository(Product)
+
 
 
 const app = express()
@@ -45,19 +45,11 @@ app.get("/users", async (req: Request, res: Response) => {
     }})
     res.json(users)
 })
-app.get("/product", async (req: Request, res: Response) => {
-    const product = await productRepository.find()
-    res.json(product)   
-});
 
 
 app.get("/users/:id", async (req: Request, res: Response) => {
     const user = await userRepository.findOneBy({ id: Number(req.params.id) })
     res.json(user)
-})
-app.get("/product/:id", async (req: Request, res: Response) => {
-    const product = await productRepository.findOneBy({ id: Number(req.params.id) })
-    res.json(product)
 })
 
 
@@ -68,26 +60,7 @@ app.post("/users", async (req: Request, res: Response) => {
     res.json(result)
 })
 
-app.post("/product", async (req: Request, res: Response) => {
-    const { title, price, description, isActive, userId } = req.body
 
-    const user = await userRepository.findOneBy({ id: userId })
-
-    if (!user) {
-        return res.status(404).json({ message: "User not found" })
-    }
-
-    const product = productRepository.create({
-        title,
-        price,
-        description,
-        isActive,
-        User: [user],
-    })
-
-    const result = await productRepository.save(product)
-    res.json(result)
-})
 
 app.patch("/users/:id", async (req: Request, res: Response) => {
     //First way
@@ -127,21 +100,6 @@ app.patch("/users/:id", async (req: Request, res: Response) => {
     const result = await userRepository.save(user)
     res.json(result)
 })
-
-
-// app.patch('/users/:id', async (req, res) => {
-//   const userId = Number(req.params.id);         
-//   const newFirstName = req.body.firstName; 
-
-//   try {
-
-//     await userRepository.query("UPDATE users SET firstName = ? WHERE id = ?", [newFirstName, userId]);
-    
-//     res.json({ message: "User updated successfully" });
-//   } catch (error) {
-//     res.status(500).json({ error: "Database update failed" });
-//   }
-// });
 
 
 
