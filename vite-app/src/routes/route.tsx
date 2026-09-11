@@ -20,7 +20,7 @@ import Quiz from "../quiz.tsx"
 import Window from "../window.tsx"
 import Focus from "../focus.tsx";
 import Login from "@/Login.tsx";
-import Product from "@/products.tsx";
+import Product from "../products.tsx";
 
 const user = "Alex";
 const theme = "dark";

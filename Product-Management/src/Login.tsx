@@ -7,9 +7,6 @@ export default function Data() {
   const [username, setUsername] = useState("")
   const [userEmail, setUserEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  )
   const [error, setError] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
@@ -35,18 +32,16 @@ export default function Data() {
 
       const accessToken = data.access_token
       localStorage.setItem("token", accessToken)
-      setToken(accessToken)
+      navigate("/products")
+      setUsername("")
+      setUserEmail("")
+      setPassword("")
+      return
     } catch (err) {
       console.error("Login failed:", err)
       setError(err instanceof Error ? err.message : "Login failed")
       localStorage.removeItem("token")
-      setToken(null)
     }
-
-    navigate("/products")
-    setUsername("")
-    setUserEmail("")
-    setPassword("")
   }
 
   const handleSignUp = async () => {
@@ -67,6 +62,10 @@ export default function Data() {
   }
 
     return (
+      <>
+      <nav style={{margin:'10px'}}>
+        <h2>Product Management</h2>
+      </nav>
       <div style={{ maxWidth: "400px", margin: "20px auto", padding: "20px" }}>
         
         <form onSubmit={handleLogin}>
@@ -158,5 +157,6 @@ export default function Data() {
           </div>
         </form>
       </div>
+      </>
     )
   }

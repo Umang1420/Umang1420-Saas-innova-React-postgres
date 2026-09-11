@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'; // 👈 Make sure NotFoundException is imported
+import { Injectable, NotFoundException } from '@nestjs/common'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from './entities/user.js'; 
 import { Products } from '../products/entities/product.entity.js'; 
+import bcrypt from 'bcrypt'
 
 @Injectable()
 export class UsersService {
@@ -33,11 +34,18 @@ export class UsersService {
       }
     }
 
+    if (!userData.password) {
+      throw new Error('Password is required');
+    }
+
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(userData.password, saltOrRounds);
+
     const newUser = new Users();
     newUser.userEmail = userData.userEmail ?? "";
-    newUser.password = userData.password ?? "";
+    newUser.password = hash;
     newUser.refreshToken = userData.refreshToken ?? "";
-    newUser.product = foundProducts; 
+    newUser.product = foundProducts;
 
     return await this.userRepository.save(newUser);
   }
