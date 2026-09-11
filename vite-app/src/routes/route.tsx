@@ -1,6 +1,7 @@
 import {
   createBrowserRouter,
   Link,
+  Navigate,
   Outlet,
   RouterProvider,
 } from "react-router-dom";
@@ -18,10 +19,21 @@ import Cart from "../cart.tsx"
 import Quiz from "../quiz.tsx"
 import Window from "../window.tsx"
 import Focus from "../focus.tsx";
-import Data from "@/backendData.tsx";
+import Login from "@/Login.tsx";
+import Product from "@/products.tsx";
 
 const user = "Alex";
 const theme = "dark";
+
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
+}
 
 function AppLayout() {
   return (
@@ -40,7 +52,8 @@ function AppLayout() {
         <Link className="links" to="/quiz">Quiz</Link>
         <Link className="links" to="/window">Window</Link>
         <Link className="links" to="/focus">Focus</Link>
-        <Link className="links" to="/data">Product Management</Link>
+        <Link className="links" to="/login">Login to Product Management</Link>
+        
       </nav>
       <Outlet />
     </>
@@ -86,7 +99,15 @@ const router = createBrowserRouter([
       { path: "/quiz", element: <Quiz /> },
       { path: "/window", element: <Window /> },
       { path: "/focus", element: <Focus /> },
-      { path: "/data", element: <Data /> }
+      { path: "/login", element: <Login /> },
+      {
+        path: "/products",
+        element: (
+          <ProtectedRoute>
+            <Product />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
