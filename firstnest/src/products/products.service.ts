@@ -27,7 +27,7 @@ export class ProductsService {
   async findAll() {
     return await this.productsRepository.find({
       order: {
-        id: 'ASC',
+        id: 'desc',
       },
     });
   }
