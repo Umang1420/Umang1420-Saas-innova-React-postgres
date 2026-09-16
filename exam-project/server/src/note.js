@@ -38,5 +38,5 @@ for(let i=0;i<10;i++){
 }
 
 
-// in this example i have readed file in both way in async way even if you call logFile function before the loop but in output the loop will excutes first.
+// in this example i have read file in both way in async way even if you call logFile function before the loop but in output the loop will executes first.
 // and on the other side in sync way loop will execute after the file read where you call it 
