@@ -1,7 +1,9 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "name": "exam-server",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -38,7 +40,7 @@
     "@nestjs/cli": "^12.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/express": "^5.0.0",
-    "@types/node": "^24.0.0",
+    "@types/node": "^24.13.5",
     "@types/passport-jwt": "^4.0.1",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.2",
