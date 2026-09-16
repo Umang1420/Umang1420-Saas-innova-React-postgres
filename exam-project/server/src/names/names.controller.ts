@@ -9,6 +9,7 @@ import {
   Put,
   HttpCode,
   HttpStatus,
+  BadRequestException
 } from '@nestjs/common';
 import { NamesService } from './names.service.js';
 import { CreateNameDto } from './dto/create-name.dto.js';
