@@ -167,10 +167,11 @@ export default function Data() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          margin: "10px 0",
+          margin: "10px",
         }}
       >
         <h3>Products List:</h3>
+        <h2>Product Management</h2>
         <button onClick={handleLogout}>Logout</button>
       </div>
       <br />
