@@ -1,0 +1,134 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+.card{
+  width: 150px;
+  height: fit-content;
+  background-color: beige;
+  color: black;
+  padding: 20px;
+}
+
+.cards{
+  width: 500px;
+  height: 200px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+h1{
+  width: 100%;
+
+  padding: 10px;
+}
+
+button{
+  width: 500px;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+}
+
+.nav-div{
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+nav{
+width: fit-content;
+display: flex;
+justify-content: space-between;
+}
+.nav-link{
+  text-decoration: none;
+  font-size: 1.1rem;
+
+  margin-right: 10px;
+}
+
+.welcome{
+  margin: 10px;
+  font-size: 1.2rem;
+}
+
+.about-div{
+  margin: 10px;
+  padding: 5px;
+} 
+
+.names-div{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: aliceblue;
+}
+
+.names-data{
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+form{
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+input,select{
+  width: 90%;
+  margin: 10px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+}
+.names-list{
+  width: 100%;
+  height: 100px;
+}
+
+.counter{
+  width: 100%;
+  height: 100vh;
+  background-color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.num-counter{
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ch-counter{
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ch-counter p{
+  width: 300px;
+  height: 60px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
