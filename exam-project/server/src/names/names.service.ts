@@ -1,51 +1,43 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNameDto } from './dto/create-name.dto.js';
 import { UpdateNameDto } from './dto/update-name.dto.js';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Name } from './entities/name.entity.js';
+import { Repository } from 'typeorm';
 
-export interface Name {
-  id: number;
-  name: string;
-  email: string;
-  course: string;
-}
 
 @Injectable()
 export class NamesService {
-  private readonly names: Name[] = [];
+private readonly names: Name[] = [];
+ constructor(
+    @InjectRepository(Name)
+    private nameRepository: Repository<Name>,
+  ) {}
 
-  create(createNameDto: CreateNameDto): Name {
+  async create(createNameDto: CreateNameDto) {
     this.validateRequiredFields(createNameDto);
-
-    const name: Name = {
-      id: this.names.length === 0 ? 1 : Math.max(...this.names.map((item) => item.id)) + 1,
-      name: createNameDto.name,
-      email: createNameDto.email,
-      course: createNameDto.course,
-    };
-
-    this.names.push(name);
-    return name;
+    const product = this.nameRepository.create(createNameDto);
+    return await this.nameRepository.save(product);
   }
 
-  findAll(): Name[] {
-    return this.names;
+  async findAll(){
+    return await this.nameRepository.find();
   }
 
-  findOne(id: number): Name {
-    const name = this.names.find((item) => item.id === id);
+  async findOne(id: number) {
+    const name = await this.nameRepository.findOne({ where : { id } });
     if (!name) {
       throw new NotFoundException(`Name with id ${id} not found`);
     }
-
     return name;
   }
 
-  update(id: number, updateNameDto: UpdateNameDto): Name {
+  async update(id: number, updateNameDto: UpdateNameDto) {
     this.validateRequiredFields(updateNameDto);
 
-    const name = this.findOne(id);
+    const name = await this.findOne(id);
     Object.assign(name, updateNameDto);
-    return name;
+    return  await this.nameRepository.save(name);
   }
 
   private validateRequiredFields(
@@ -59,14 +51,10 @@ export class NamesService {
     }
   }
 
-  remove(id: number): Name {
-    const nameIndex = this.names.findIndex((item) => item.id === id);
-    if (nameIndex === -1) {
-      throw new NotFoundException(`Name with id ${id} not found`);
-    }
-    
+  async remove(id: number) {
 
-    const removedName = this.names.splice(nameIndex, 1)[0]!;
-    return removedName;
+    const name = await this.findOne(id);
+    return await this.nameRepository.remove(name);
+    
   }
 }

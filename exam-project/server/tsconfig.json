@@ -31,6 +31,10 @@
     "noUncheckedSideEffectImports": true,
     "skipLibCheck": true
   },
+  "ts-node": {
+    "esm": true,
+    "experimentalResolver": true
+  },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

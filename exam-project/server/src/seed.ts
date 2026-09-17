@@ -50,7 +50,7 @@ async function seed() {
 			name = await nameRepository.save(
 				nameRepository.create({
 					name: 'Exam User',
-					email : email,
+					email,
 					course: 'BCA',
 					user: examUser,
 				}),

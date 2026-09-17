@@ -4,11 +4,14 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { LoggerMiddleware } from './app.service.js';
 import { NamesModule } from './names/names.module.js';
-import { PostgresDataSource } from './data-source.js'
+import { PostgresDataSource } from './data-source.js';
+import { Name } from './names/entities/name.entity.js';
+import { Users } from './users/user.entity.js';
 
 @Module({
  imports: [
     TypeOrmModule.forRoot(PostgresDataSource.options),
+    TypeOrmModule.forFeature([Name, Users]),
     NamesModule,
   ],
   controllers: [AppController],

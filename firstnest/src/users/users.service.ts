@@ -21,7 +21,8 @@ export class UsersService {
       relations: { product: true } 
     });
   }
-   async findAll() {
+  
+  async findAll() {
     return await this.userRepository.find();
   }
 
