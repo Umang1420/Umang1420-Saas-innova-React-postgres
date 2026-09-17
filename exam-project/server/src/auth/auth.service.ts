@@ -15,16 +15,16 @@ export class AuthService {
   async signIn(username: string, pass: string): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.usersService.findOne(username);
 
-    if (!user || !user.password) {
+    if (!user || !user.passwordHash) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const isMatch = await bcrypt.compare(pass, user.password);
+    const isMatch = await bcrypt.compare(pass, user.passwordHash);
 
     if (!isMatch) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.userEmail, user.role);
+    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
 
 
     user.refreshToken = refreshToken;
@@ -44,7 +44,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.userEmail, user.role);
+    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
 
   
     user.refreshToken = refreshToken;
