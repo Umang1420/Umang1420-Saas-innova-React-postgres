@@ -39,9 +39,9 @@ export class AuthService {
     if(!user){
       throw new UnauthorizedException("invalid user")
     }
-    const oldrefresh = localStorage.getItem('refresh');
+    const oldRefresh = localStorage.getItem('refresh');
 
-    if (!user || !oldrefresh || oldrefresh !== providedRefreshToken) {
+    if (!user || !oldRefresh || oldRefresh !== providedRefreshToken) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     } 
     const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
