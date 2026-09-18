@@ -52,9 +52,7 @@ private readonly names: Name[] = [];
   }
 
   async remove(id: number) {
-
     const name = await this.findOne(id);
     return await this.nameRepository.remove(name);
-    
   }
 }

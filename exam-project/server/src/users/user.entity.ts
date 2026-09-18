@@ -12,8 +12,6 @@ export class Users {
     @Column()
     passwordHash!: string
 
-    
-
     @Column({default:'user'})
     role!: string
 
