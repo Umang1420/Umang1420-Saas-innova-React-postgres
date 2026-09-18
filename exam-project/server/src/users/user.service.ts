@@ -10,9 +10,8 @@ export class UsersService {
   constructor(
     @InjectRepository(Users)
     private readonly userRepository: Repository<Users>,
-
     @InjectRepository(Name)
-    private readonly productRepository: Repository<Name>,
+    private readonly nameRepository: Repository<Name>
   ) {}
 
   async findOne(username: string): Promise<Users | null> {
@@ -22,17 +21,11 @@ export class UsersService {
   }
   
   async findAll() {
-    return await this.userRepository.find();
+    return await this.nameRepository.find();
   }
 
-  async createUserWithProducts(userData: Partial<Users>, productIds: number[]): Promise<Users> {
-    const foundProducts = [];
-    for (const id of productIds) {
-      const prod = await this.productRepository.findOneBy({ id });
-      if (prod) {
-        foundProducts.push(prod);
-      }
-    }
+  async createUserWithProducts(userData: Partial<Users>): Promise<Users> {
+   
 
     if (!userData.passwordHash) {
       throw new Error('Password is required');
@@ -44,7 +37,6 @@ export class UsersService {
     const newUser = new Users();
     newUser.username = userData.username ?? "";
     newUser.passwordHash = hash;
-    newUser.names = foundProducts;
 
     return await this.userRepository.save(newUser);
   }

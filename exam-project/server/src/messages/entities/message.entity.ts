@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn } from "typeorm"
-import { Users } from "../users/user.entity.js"
+import { Users } from "../../users/user.entity.js"
 
 @Entity()
 export class Message {

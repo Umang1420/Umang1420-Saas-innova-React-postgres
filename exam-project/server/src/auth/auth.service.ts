@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/user.service.js';
 import bcrypt from 'bcrypt'
 
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -11,7 +12,6 @@ export class AuthService {
   ) {}
 
   
-
   async signIn(username: string, pass: string): Promise<{ access_token: string; refresh_token: string }> {
     const user = await this.usersService.findOne(username);
 
@@ -26,8 +26,6 @@ export class AuthService {
     }
     const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
 
-
-    user.refreshToken = refreshToken;
     await this.usersService.updateUser(user); 
 
     return {
@@ -40,15 +38,17 @@ export class AuthService {
 
     const user = await this.usersService.findById(userId);
     
-    if (!user || !user.refreshToken || user.refreshToken !== providedRefreshToken) {
+    if(!user){
+      throw new UnauthorizedException("invalid user")
+    }
+    
+    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
+
+    if (!user || !refreshToken || refreshToken !== providedRefreshToken) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    const { accessToken, refreshToken } = await this.generateTokens(user.id, user.username, user.role);
-
-  
-    user.refreshToken = refreshToken;
-    await this.usersService.updateUser(user);
+    await this.usersService.updateUser(user); 
 
     return {
       access_token: accessToken,
@@ -61,7 +61,7 @@ export class AuthService {
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        expiresIn: '60m',
+        expiresIn: '15m',
       }),
       this.jwtService.signAsync(payload, {
         expiresIn: '7d',
@@ -73,4 +73,4 @@ export class AuthService {
       refreshToken,
     };
   }
-}
+}   
